@@ -1,0 +1,72 @@
+{
+  "name": "@mvrx/mail",
+  "version": "0.1.0",
+  "description": "AECS TypeScript SDK core: normalize raw MIME email into AI-ready NormalizedEmail objects.",
+  "license": "AGPL-3.0-only",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": ["dist"],
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./adapters": {
+      "import": "./dist/adapters.js",
+      "types": "./dist/adapters.d.ts"
+    },
+    "./content": {
+      "import": "./dist/content.js",
+      "types": "./dist/content.d.ts"
+    },
+    "./thread": {
+      "import": "./dist/thread.js",
+      "types": "./dist/thread.d.ts"
+    },
+    "./threading": {
+      "import": "./dist/threading.js",
+      "types": "./dist/threading.d.ts"
+    },
+    "./wrappers": {
+      "import": "./dist/wrappers.js",
+      "types": "./dist/wrappers.d.ts"
+    },
+    "./types": {
+      "import": "./dist/types.js",
+      "types": "./dist/types.d.ts"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "tsc",
+    "test": "node --test test/*.test.mjs"
+  },
+  "peerDependencies": {
+    "@cloudflare/workers-types": "^4.0.0",
+    "drizzle-orm": "^0.38.0",
+    "hono": "^4.0.0",
+    "postal-mime": "^2.0.0",
+    "zod": "^3.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@cloudflare/workers-types": { "optional": true },
+    "drizzle-orm": { "optional": true },
+    "hono": { "optional": true },
+    "postal-mime": { "optional": true },
+    "zod": { "optional": true }
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250109.0",
+    "typescript": "^5.8.0"
+  },
+  "keywords": ["email", "ai", "mime", "aecs", "cloudflare", "workers"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mvrxapp/mail.git",
+    "directory": "packages/mail"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

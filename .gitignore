@@ -1,0 +1,9 @@
+node_modules
+.wrangler
+dist
+*.env
+.dev.vars
+.srcpilot/
+.tasks/
+docs/launch-plan.md
+internal/

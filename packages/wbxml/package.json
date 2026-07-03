@@ -1,0 +1,33 @@
+{
+  "name": "@mvrx/wbxml",
+  "version": "0.1.0",
+  "description": "Zero-dependency WBXML parser and encoder for Exchange ActiveSync 14.1",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test test/*.test.mjs"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.0"
+  },
+  "keywords": ["wbxml", "exchange", "activesync", "eas", "email"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mvrxapp/mail.git",
+    "directory": "packages/wbxml"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "name": "my-mail-worker",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-06-01",
+  "compatibility_flags": ["nodejs_compat"],
+
+  // ─── D1 database ──────────────────────────────────────────────────────────
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "my-mail",
+      "database_id": "<your-d1-database-id>"
+    }
+  ],
+
+  // ─── R2 blob storage ──────────────────────────────────────────────────────
+  "r2_buckets": [
+    {
+      "binding": "BLOBS",
+      "bucket_name": "my-mail-blobs"
+    }
+  ],
+
+  // ─── Durable Objects ──────────────────────────────────────────────────────
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "USER_HUB",
+        "class_name": "UserHub"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["UserHub"]
+    }
+  ],
+
+  // ─── AI ───────────────────────────────────────────────────────────────────
+  "ai": {
+    "binding": "AI"
+  },
+
+  // ─── Queues ───────────────────────────────────────────────────────────────
+  "queues": {
+    "producers": [
+      { "binding": "CLASSIFY_Q", "queue": "my-mail-classify" }
+    ],
+    "consumers": [
+      { "queue": "my-mail-classify", "max_batch_size": 10 }
+    ]
+  },
+
+  // ─── Email ────────────────────────────────────────────────────────────────
+  // Workers Paid required for outbound. Inbound routing is always free.
+  "send_email": [
+    {
+      "name": "EMAIL"
+    }
+  ],
+
+  // ─── Vars ─────────────────────────────────────────────────────────────────
+  "vars": {
+    "TEMP_DOMAIN": "mail.yourdomain.com",
+    "AGENT_MODEL_CLASSIFY": "@cf/meta/llama-3.3-70b-instruct",
+    "AGENT_MODEL_CHAT": "@cf/meta/llama-3.3-70b-instruct"
+  }
+}
