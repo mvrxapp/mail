@@ -8,17 +8,27 @@ importers:
 
   .: {}
 
+  packages/aecs:
+    dependencies:
+      postal-mime:
+        specifier: ^2.0.0
+        version: 2.7.5
+    devDependencies:
+      typescript:
+        specifier: ^5.8.0
+        version: 5.9.3
+
   packages/mail:
     dependencies:
+      '@mvrx/aecs':
+        specifier: workspace:^
+        version: link:../aecs
       drizzle-orm:
         specifier: ^0.38.0
         version: 0.38.4(@cloudflare/workers-types@4.20260701.1)
       hono:
         specifier: ^4.0.0
         version: 4.12.27
-      postal-mime:
-        specifier: ^2.0.0
-        version: 2.7.5
       zod:
         specifier: ^3.0.0
         version: 3.25.76

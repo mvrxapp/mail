@@ -4,7 +4,7 @@ import test from "node:test";
 import { parse, resolveThreadId, normalizeDate, parseReferences, wrappers, EmailThread } from "../dist/index.js";
 
 test("AECS threading and timestamp fixtures match the reference expectations", async () => {
-  const fixtureDir = new URL("../../../specs/conformance/fixtures/", import.meta.url);
+  const fixtureDir = new URL("../specs/conformance/fixtures/", import.meta.url);
   for (const name of await readdir(fixtureDir)) {
     if (!name.endsWith(".json")) continue;
     const fixture = JSON.parse(await readFile(new URL(name, fixtureDir), "utf8"));

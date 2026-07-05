@@ -1,4 +1,4 @@
-import type { Address } from "./types.js";
+import type { Address } from "@mvrx/aecs";
 
 /**
  * Core adapter interfaces for @mvrx/mail.
