@@ -43,7 +43,7 @@
     "test": "node --test test/*.test.mjs"
   },
   "dependencies": {
-    "@mvrx/aecs": "workspace:^"
+    "@mvrx/aecs": "github:mvrxapp/aecs#main"
   },
   "peerDependencies": {
     "@cloudflare/workers-types": "^4.0.0",

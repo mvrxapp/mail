@@ -66,8 +66,8 @@ export default {
 The core parser is implemented. Storage, sending, rules, EAS, MCP, and the hosted-service
 dashboard are later modules and must build on this public SDK surface rather than bypass it.
 
-The normative structure is [AECS-1 v1.0.0](../../specs/AECS-1-ai-email-consumption.md).
-The broader SDK roadmap is [`../../specs/AECS-SDK-1-specification.md`](../../specs/AECS-SDK-1-specification.md).
+The normative structure is [AECS-1 v1.0.0](https://github.com/mvrxapp/aecs/blob/main/specs/AECS-1-ai-email-consumption.md).
+The broader SDK roadmap is [AECS-SDK-1](https://github.com/mvrxapp/aecs/blob/main/specs/AECS-SDK-1-specification.md).
 Full docs are launching soon at [mvrx.app/docs](https://mvrx.app/docs).
 
 ## License

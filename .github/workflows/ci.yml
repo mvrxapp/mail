@@ -23,4 +23,3 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm -r typecheck
       - run: pnpm -r build
-      - run: python3 specs/conformance/verify.py

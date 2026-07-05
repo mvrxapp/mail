@@ -36,12 +36,14 @@ pnpm build
 
 - **Code changes** — keep to the package's existing patterns; run `pnpm typecheck` and
   `pnpm build` before opening a PR.
-- **Spec changes** (`specs/AECS-1-*.md`, `specs/AECS-SDK-1-*.md`) — these are versioned
-  documents (see each spec's Versioning section). Breaking changes to `NormalizedEmail`
-  require a major version bump. If you change the threading algorithm (AECS-1 §5) or
-  anything else covered by a fixture, update `specs/conformance/fixtures/` and confirm
-  every fixture's expected output still matches — run `python3 specs/conformance/verify.py`
-  and `pnpm --filter @mvrx/mail test`.
+- **Spec changes** (AECS-1, AECS-SDK-1) — these live in the separate
+  [mvrxapp/aecs](https://github.com/mvrxapp/aecs) repo, not here. They're versioned
+  documents (see each spec's Versioning section); breaking changes to `NormalizedEmail`
+  require a major version bump, and threading algorithm changes (AECS-1 §5) require
+  updating `specs/conformance/fixtures/` in that repo and confirming every fixture's
+  expected output still matches (`python3 specs/conformance/verify.py`). After a
+  released `@mvrx/aecs` change, run `pnpm --filter @mvrx/mail test` here to confirm
+  `@mvrx/mail` still passes against it.
 - **New packages** — follow the `packages/wbxml` layout (own `package.json`, `LICENSE`,
   `README.md`, `tsconfig.json`) and add it to the table in the root `README.md`.
 

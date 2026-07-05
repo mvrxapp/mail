@@ -14,7 +14,7 @@ data — plus the standalone protocol libraries that make it work.
 [![npm @mvrx/wbxml](https://img.shields.io/npm/v/@mvrx/wbxml.svg?label=%40mvrx%2Fwbxml)](https://www.npmjs.com/package/@mvrx/wbxml)
 [![License: AGPL-3.0](https://img.shields.io/badge/license-AGPL--3.0-blue.svg)](./packages/mail/LICENSE)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](./packages/wbxml/LICENSE)
-[![AECS-1](https://img.shields.io/badge/AECS--1-1.0.0-blueviolet.svg)](./packages/aecs/specs/AECS-1-ai-email-consumption.md)
+[![AECS-1](https://img.shields.io/badge/AECS--1-1.0.0-blueviolet.svg)](https://github.com/mvrxapp/aecs/blob/main/specs/AECS-1-ai-email-consumption.md)
 
 </div>
 
@@ -79,35 +79,34 @@ Thanks, that works for me — let's do Thursday at 2pm.
 | Package | npm | License | Description |
 |---|---|---|---|
 | [`packages/mail`](./packages/mail) | [![npm](https://img.shields.io/npm/v/@mvrx/mail.svg)](https://www.npmjs.com/package/@mvrx/mail) `@mvrx/mail` | AGPL-3.0-only | Cloudflare Email Routing SDK built on `@mvrx/aecs` |
-| [`packages/aecs`](./packages/aecs) | [![npm](https://img.shields.io/npm/v/@mvrx/aecs.svg)](https://www.npmjs.com/package/@mvrx/aecs) `@mvrx/aecs` | MIT | Framework-agnostic AECS-1 reference implementation |
+| [mvrxapp/aecs](https://github.com/mvrxapp/aecs) | [![npm](https://img.shields.io/npm/v/@mvrx/aecs.svg)](https://www.npmjs.com/package/@mvrx/aecs) `@mvrx/aecs` | MIT | Framework-agnostic AECS-1 reference implementation (separate repo — the open standard) |
 | [`packages/wbxml`](./packages/wbxml) | [![npm](https://img.shields.io/npm/v/@mvrx/wbxml.svg)](https://www.npmjs.com/package/@mvrx/wbxml) `@mvrx/wbxml` | MIT | Standalone WBXML parser/encoder for Exchange ActiveSync |
 
 ## Specification
 
-[AECS-1](./packages/aecs/specs/AECS-1-ai-email-consumption.md) (v1.0.0, Final) is the open
-specification behind `@mvrx/mail`: it defines `NormalizedEmail` — the schema, the
-deterministic threading algorithm, timestamp normalization rules, and the six
-content levels (`rawFull` / `raw` / `html` / `text` / `clean` / `forAI`). It's
-published under **CC0 1.0** (public domain) so anyone can implement it, in any
-language, without asking permission. `@mvrx/aecs` is the framework-agnostic,
-MIT-licensed reference implementation of this spec.
+**AECS-1** (v1.0.0, Final) is the open specification behind `@mvrx/mail`, maintained in its
+own repo, [mvrxapp/aecs](https://github.com/mvrxapp/aecs): it defines `NormalizedEmail` —
+the schema, the deterministic threading algorithm, timestamp normalization rules, and the
+six content levels (`rawFull` / `raw` / `html` / `text` / `clean` / `forAI`). It's published
+under **CC0 1.0** (public domain) so anyone can implement it, in any language, without
+asking permission. `@mvrx/aecs` is the framework-agnostic, MIT-licensed reference
+implementation of this spec, and `@mvrx/mail` depends on it rather than reimplementing it.
 
-- [AECS-1 spec](./packages/aecs/specs/AECS-1-ai-email-consumption.md) — the normative document
-- [JSON Schema](./packages/aecs/specs/schema/normalized-email.schema.json) — machine-checkable `NormalizedEmail` shape
-- [Conformance suite](./packages/aecs/specs/conformance/) — fixtures + an independent reference checker (`verify.py`) for the threading and timestamp rules
-- [AECS-SDK-1](./packages/aecs/specs/AECS-SDK-1-specification.md) (v0.3.0-draft) — the broader SDK roadmap that `@mvrx/mail` implements against
+- [AECS-1 spec](https://github.com/mvrxapp/aecs/blob/main/specs/AECS-1-ai-email-consumption.md) — the normative document
+- [JSON Schema](https://github.com/mvrxapp/aecs/blob/main/specs/schema/normalized-email.schema.json) — machine-checkable `NormalizedEmail` shape
+- [Conformance suite](https://github.com/mvrxapp/aecs/tree/main/specs/conformance) — fixtures + an independent reference checker (`verify.py`) for the threading and timestamp rules
+- [AECS-SDK-1](https://github.com/mvrxapp/aecs/blob/main/specs/AECS-SDK-1-specification.md) (v0.3.0-draft) — the broader SDK roadmap that `@mvrx/mail` implements against
 
 ## Documentation
 
 The AECS-1 specification has a browsable home at
-[mvrxapp.github.io/mail](https://mvrxapp.github.io/mail/). Full product docs are
+[mvrxapp.github.io/aecs](https://mvrxapp.github.io/aecs/). Full product docs are
 launching soon at [mvrx.app/docs](https://mvrx.app/docs). Until then, the primary
-references are in this repo:
+references are:
 
 - [`packages/mail/README.md`](./packages/mail/README.md) — SDK usage and content levels
-- [`packages/aecs/README.md`](./packages/aecs/README.md) — framework-agnostic reference implementation
 - [`packages/wbxml/README.md`](./packages/wbxml/README.md) — WBXML API reference
-- [`packages/aecs/specs/`](./packages/aecs/specs/) — the AECS-1 and AECS-SDK-1 specifications
+- [mvrxapp/aecs](https://github.com/mvrxapp/aecs) — the AECS-1/AECS-SDK-1 specs, schema, and conformance suite
 
 ## Contributing
 

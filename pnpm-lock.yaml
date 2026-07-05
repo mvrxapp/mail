@@ -8,21 +8,11 @@ importers:
 
   .: {}
 
-  packages/aecs:
-    dependencies:
-      postal-mime:
-        specifier: ^2.0.0
-        version: 2.7.5
-    devDependencies:
-      typescript:
-        specifier: ^5.8.0
-        version: 5.9.3
-
   packages/mail:
     dependencies:
       '@mvrx/aecs':
-        specifier: workspace:^
-        version: link:../aecs
+        specifier: github:mvrxapp/aecs#main
+        version: https://codeload.github.com/mvrxapp/aecs/tar.gz/26c4886972530d4ad1375be6e7c7810c3feb3b52
       drizzle-orm:
         specifier: ^0.38.0
         version: 0.38.4(@cloudflare/workers-types@4.20260701.1)
@@ -50,6 +40,11 @@ packages:
 
   '@cloudflare/workers-types@4.20260701.1':
     resolution: {integrity: sha512-eGZ+PWPlu/yUxH+BJoplV45oSA709sjYFYr2kjrqSo+601qE15X4tsuZcPz1KE6Fb3ObGA9d9ZXn53n34NtyiA==}
+
+  '@mvrx/aecs@https://codeload.github.com/mvrxapp/aecs/tar.gz/26c4886972530d4ad1375be6e7c7810c3feb3b52':
+    resolution: {tarball: https://codeload.github.com/mvrxapp/aecs/tar.gz/26c4886972530d4ad1375be6e7c7810c3feb3b52}
+    version: 0.1.0
+    engines: {node: '>=18'}
 
   drizzle-orm@0.38.4:
     resolution: {integrity: sha512-s7/5BpLKO+WJRHspvpqTydxFob8i1vo2rEx4pY6TGY7QSMuUfWUuzaY0DIpXCkgHOo37BaFC+SJQb99dDUXT3Q==}
@@ -161,6 +156,10 @@ packages:
 snapshots:
 
   '@cloudflare/workers-types@4.20260701.1': {}
+
+  '@mvrx/aecs@https://codeload.github.com/mvrxapp/aecs/tar.gz/26c4886972530d4ad1375be6e7c7810c3feb3b52':
+    dependencies:
+      postal-mime: 2.7.5
 
   drizzle-orm@0.38.4(@cloudflare/workers-types@4.20260701.1):
     optionalDependencies:
