@@ -6,7 +6,7 @@ import { defineConfig } from "vitest/config";
 export default defineConfig({
   plugins: [
     cloudflareTest({
-      // Worker entry that registers the UserHub Durable Object so the HUB
+      // Worker entry that registers the UserRelay Durable Object so the RELAY
       // binding resolves to it in tests.
       main: "./test/worker.ts",
       miniflare: {
@@ -15,7 +15,7 @@ export default defineConfig({
         d1Databases: ["DB"],
         r2Buckets: ["BLOBS"],
         kvNamespaces: ["CACHE"],
-        durableObjects: { HUB: "UserHub" },
+        durableObjects: { RELAY: "UserRelay" },
       },
     }),
   ],

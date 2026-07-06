@@ -4,17 +4,17 @@ import { cfProvider } from "@mvrx/mail/providers";
 import { classify } from "@mvrx/mail/ai-tools";
 import { compose } from "@mvrx/mail/compose";
 import { processors } from "@mvrx/mail/attachments";
-import { publishEvent, hubRouter } from "@mvrx/mail/hub";
+import { publishEvent, relayRouter } from "@mvrx/mail/relay";
 
-// Register the UserHub Durable Object (backs real-time SSE events).
-export { UserHub } from "@mvrx/mail/hub";
+// Register the UserRelay Durable Object (backs real-time SSE events).
+export { UserRelay } from "@mvrx/mail/relay";
 
 interface Env {
   DB: D1Database;
   BLOBS: R2Bucket;
   AI: Ai;
   EMAIL: SendEmail;
-  HUB: DurableObjectNamespace;
+  RELAY: DurableObjectNamespace;
   AGENT_MODEL_CLASSIFY: string;
   AGENT_MODEL_CHAT: string;
 }
@@ -43,7 +43,7 @@ export default {
     const results = await evaluateRules(email, rules, cfTransport(env.EMAIL));
     for (const r of results) {
       if (!r.matched) continue;
-      await publishEvent(env.HUB, userId, {
+      await publishEvent(env.RELAY, userId, {
         type: "rule_fired",
         payload: {
           ruleId: r.ruleId,
@@ -55,7 +55,7 @@ export default {
     }
 
     // Push a real-time "new message" event to any connected SSE clients.
-    await publishEvent(env.HUB, userId, {
+    await publishEvent(env.RELAY, userId, {
       type: "new_message",
       payload: {
         messageId: email.messageId,
@@ -90,13 +90,13 @@ export default {
     );
   },
 
-  // Mount the real-time SSE endpoint: clients connect with `new EventSource("/hub")`.
+  // Mount the real-time SSE endpoint: clients connect with `new EventSource("/relay")`.
   async fetch(req: Request, env: Env): Promise<Response> {
     const url = new URL(req.url);
-    if (url.pathname === "/hub") {
+    if (url.pathname === "/relay") {
       // Derive the userId from your auth in production; single-tenant demo below.
       const userId = url.searchParams.get("user") ?? "demo";
-      return hubRouter(req, env.HUB, userId);
+      return relayRouter(req, env.RELAY, userId);
     }
     return new Response("AECS mail Worker — receive, store, rules, events, classify, reply");
   },

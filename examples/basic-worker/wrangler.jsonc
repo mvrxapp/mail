@@ -25,15 +25,15 @@
   "durable_objects": {
     "bindings": [
       {
-        "name": "HUB",
-        "class_name": "UserHub"
+        "name": "RELAY",
+        "class_name": "UserRelay"
       }
     ]
   },
   "migrations": [
     {
       "tag": "v1",
-      "new_sqlite_classes": ["UserHub"]
+      "new_sqlite_classes": ["UserRelay"]
     }
   ],
 
