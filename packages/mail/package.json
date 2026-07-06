@@ -1,12 +1,14 @@
 {
   "name": "@mvrx/mail",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Cloudflare Email Routing SDK: send, receive, and store AI-ready email using the @mvrx/aecs standard.",
   "license": "AGPL-3.0-only",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "exports": {
     ".": {
       "import": "./dist/index.js",
@@ -35,12 +37,41 @@
     "./types": {
       "import": "./dist/types.js",
       "types": "./dist/types.d.ts"
+    },
+    "./transports": {
+      "import": "./dist/transports/index.js",
+      "types": "./dist/transports/index.d.ts"
+    },
+    "./providers": {
+      "import": "./dist/providers/index.js",
+      "types": "./dist/providers/index.d.ts"
+    },
+    "./tools": {
+      "import": "./dist/tools.js",
+      "types": "./dist/tools.d.ts"
+    },
+    "./ai-tools": {
+      "import": "./dist/ai-tools/index.js",
+      "types": "./dist/ai-tools/index.d.ts"
+    },
+    "./compose": {
+      "import": "./dist/compose/index.js",
+      "types": "./dist/compose/index.d.ts"
+    },
+    "./attachments": {
+      "import": "./dist/attachments/index.js",
+      "types": "./dist/attachments/index.d.ts"
+    },
+    "./hub": {
+      "import": "./dist/hub/index.js",
+      "types": "./dist/hub/index.d.ts"
     }
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
     "build": "tsc",
-    "test": "node --test test/*.test.mjs"
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@mvrx/aecs": "github:mvrxapp/aecs#main"
@@ -52,16 +83,33 @@
     "zod": "^3.0.0"
   },
   "peerDependenciesMeta": {
-    "@cloudflare/workers-types": { "optional": true },
-    "drizzle-orm": { "optional": true },
-    "hono": { "optional": true },
-    "zod": { "optional": true }
+    "@cloudflare/workers-types": {
+      "optional": true
+    },
+    "drizzle-orm": {
+      "optional": true
+    },
+    "hono": {
+      "optional": true
+    },
+    "zod": {
+      "optional": true
+    }
   },
   "devDependencies": {
+    "@cloudflare/vitest-pool-workers": "^0.18.0",
     "@cloudflare/workers-types": "^4.20250109.0",
-    "typescript": "^5.8.0"
+    "typescript": "^5.8.0",
+    "vitest": "^4.1.0"
   },
-  "keywords": ["email", "ai", "mime", "aecs", "cloudflare", "workers"],
+  "keywords": [
+    "email",
+    "ai",
+    "mime",
+    "aecs",
+    "cloudflare",
+    "workers"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/mvrxapp/mail.git",

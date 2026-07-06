@@ -21,5 +21,8 @@ jobs:
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
-      - run: pnpm -r typecheck
+      # Build first so workspace packages that consume a sibling's built output
+      # (e.g. examples/basic-worker importing @mvrx/mail subpaths, whose types
+      # resolve to dist/) can be type-checked.
       - run: pnpm -r build
+      - run: pnpm -r typecheck

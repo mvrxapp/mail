@@ -25,7 +25,7 @@
   "durable_objects": {
     "bindings": [
       {
-        "name": "USER_HUB",
+        "name": "HUB",
         "class_name": "UserHub"
       }
     ]
