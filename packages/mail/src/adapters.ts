@@ -86,7 +86,7 @@ export interface MailEvent {
 
 /**
  * Abstracts real-time fan-out to connected clients.
- * CF implementation: UserHub Durable Object via `hubBus(env.HUB)` in `@mvrx/mail/hub`.
+ * CF implementation: UserRelay Durable Object via `relayBus(env.RELAY)` in `@mvrx/mail/relay`.
  * For non-CF deployments: implement with WebSockets, SSE, or webhooks.
  */
 export interface NotificationBus {

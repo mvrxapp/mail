@@ -62,9 +62,9 @@
       "import": "./dist/attachments/index.js",
       "types": "./dist/attachments/index.d.ts"
     },
-    "./hub": {
-      "import": "./dist/hub/index.js",
-      "types": "./dist/hub/index.d.ts"
+    "./relay": {
+      "import": "./dist/relay/index.js",
+      "types": "./dist/relay/index.d.ts"
     }
   },
   "scripts": {

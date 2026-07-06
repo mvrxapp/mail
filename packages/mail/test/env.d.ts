@@ -4,6 +4,6 @@ declare module "cloudflare:test" {
     DB: D1Database;
     BLOBS: R2Bucket;
     CACHE: KVNamespace;
-    HUB: DurableObjectNamespace;
+    RELAY: DurableObjectNamespace;
   }
 }

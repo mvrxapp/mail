@@ -5,9 +5,9 @@ import type { MailEvent as LooseMailEvent, NotificationBus } from "../adapters.j
 /**
  * Real-time events for @mvrx/mail (AECS-SDK-1 §16).
  *
- * `UserHub` is a Durable Object — one instance per user, keyed by an opaque
+ * `UserRelay` is a Durable Object — one instance per user, keyed by an opaque
  * `userId` — that holds open Server-Sent Events (SSE) connections and fans out
- * `MailEvent`s to them. `publishEvent`/`hubRouter`/`hubBus` are the SDK helpers
+ * `MailEvent`s to them. `publishEvent`/`relayRouter`/`relayBus` are the SDK helpers
  * that route through the DO.
  *
  * Delivery is fire-and-forget, at-most-once, with NO replay (§16.5): if no
@@ -47,7 +47,7 @@ export type MailEvent =
     };
 
 // The typed union above must stay assignable to the looser adapters.ts MailEvent
-// ({ type: MailEventType; payload: Record<string, unknown> }) so UserHub can
+// ({ type: MailEventType; payload: Record<string, unknown> }) so UserRelay can
 // satisfy NotificationBus. This assertion fails the build if they ever diverge.
 const _assertAssignable: LooseMailEvent = null as unknown as MailEvent;
 void _assertAssignable;
@@ -64,14 +64,14 @@ export function toSseFrame(event: MailEvent): Uint8Array {
 const KEEPALIVE_MS = 25_000;
 const KEEPALIVE_FRAME = encoder.encode(": keep-alive\n\n");
 
-// ── UserHub Durable Object ───────────────────────────────────────────────────
+// ── UserRelay Durable Object ───────────────────────────────────────────────────
 
 /**
  * One instance per user. Holds the set of open SSE stream controllers and fans
  * `MailEvent`s out to them. Register the class in wrangler with a DO binding +
- * migration (see the example worker), then `export { UserHub } from "@mvrx/mail/hub"`.
+ * migration (see the example worker), then `export { UserRelay } from "@mvrx/mail/relay"`.
  */
-export class UserHub extends DurableObject {
+export class UserRelay extends DurableObject {
   private controllers = new Set<ReadableStreamDefaultController<Uint8Array>>();
   private keepAlive: ReturnType<typeof setInterval> | null = null;
 
@@ -145,8 +145,8 @@ export class UserHub extends DurableObject {
 
 // ── SDK helpers ──────────────────────────────────────────────────────────────
 
-function stubFor(hub: DurableObjectNamespace, userId: string): DurableObjectStub {
-  return hub.get(hub.idFromName(userId));
+function stubFor(relay: DurableObjectNamespace, userId: string): DurableObjectStub {
+  return relay.get(relay.idFromName(userId));
 }
 
 /**
@@ -155,11 +155,11 @@ function stubFor(hub: DurableObjectNamespace, userId: string): DurableObjectStub
  * Worker handler.
  */
 export async function publishEvent(
-  hub: DurableObjectNamespace,
+  relay: DurableObjectNamespace,
   userId: string,
   event: MailEvent
 ): Promise<void> {
-  await stubFor(hub, userId).fetch("https://user-hub/publish", {
+  await stubFor(relay, userId).fetch("https://user-relay/publish", {
     method: "POST",
     body: JSON.stringify(event),
   });
@@ -168,22 +168,22 @@ export async function publishEvent(
 /**
  * Mount as an SSE endpoint. Returns a `text/event-stream` Response that stays
  * open and streams this user's `MailEvent`s. Wire it into your fetch handler:
- * `if (url.pathname === "/hub") return hubRouter(req, env.HUB, getUserId(req))`.
+ * `if (url.pathname === "/relay") return relayRouter(req, env.RELAY, getUserId(req))`.
  */
-export async function hubRouter(
+export async function relayRouter(
   _req: Request,
-  hub: DurableObjectNamespace,
+  relay: DurableObjectNamespace,
   userId: string
 ): Promise<Response> {
-  return stubFor(hub, userId).fetch("https://user-hub/connect");
+  return stubFor(relay, userId).fetch("https://user-relay/connect");
 }
 
 /**
- * Adapts a UserHub DO namespace to the `NotificationBus` interface (adapters.ts),
+ * Adapts a UserRelay DO namespace to the `NotificationBus` interface (adapters.ts),
  * so it can be passed anywhere a generic bus is expected.
  */
-export function hubBus(hub: DurableObjectNamespace): NotificationBus {
+export function relayBus(relay: DurableObjectNamespace): NotificationBus {
   return {
-    publish: (userId, event) => publishEvent(hub, userId, event as MailEvent),
+    publish: (userId, event) => publishEvent(relay, userId, event as MailEvent),
   };
 }
